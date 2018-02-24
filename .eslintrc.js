@@ -15,16 +15,14 @@ module.exports = {
     'standard'
   ],
   // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
+  plugins: ['vue', 'prettier'],
   globals: {
-    'ga': true, // Google Analytics
-    'cordova': true,
-    '__statics': true
+    ga: true, // Google Analytics
+    cordova: true,
+    __statics: true
   },
   // add your custom rules here
-  'rules': {
+  rules: {
     // allow async-await
     'generator-star-spacing': 'off',
 
