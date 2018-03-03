@@ -18,19 +18,27 @@ module.exports = function (ctx) {
     },
     build: {
       scopeHoisting: true,
-      vueRouterMode: 'history'
+      vueRouterMode: 'history',
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
       // useNotifier: false,
-      //   extendWebpack (cfg) {
-      //     cfg.module.rules.push({
-      //       enforce: 'pre',
-      //       test: /\.(js|vue)$/,
-      //       loader: 'eslint-loader',
-      //       exclude: /(node_modules|quasar)/
-      //     })
-      //   }
+      extendWebpack (cfg) {
+        cfg.module.rules.push({
+          test: /\.ts$/,
+          exclude: /node_modules|vue\/src/,
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
+        })
+        //   cfg.module.rules.push({
+        //     enforce: 'pre',
+        //     test: /\.(js|vue)$/,
+        //     loader: 'eslint-loader',
+        //     exclude: /(node_modules|quasar)/
+        //   })
+      }
     },
     devServer: {
       // https: true,
@@ -62,7 +70,7 @@ module.exports = function (ctx) {
     animations: [],
     pwa: {
       cacheExt:
-        'js,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
+        'js,ts,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
       manifest: {
         // name: 'Quasar App',
         // short_name: 'Quasar-PWA',

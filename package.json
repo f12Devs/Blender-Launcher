@@ -19,6 +19,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@types/node": "^9.4.6",
     "babel-eslint": "^8.2.2",
     "devtron": "1.4.0",
     "electron": "^1.8.2",
@@ -36,7 +37,9 @@
     "eslint-plugin-standard": "3.0.1",
     "eslint-plugin-vue": "^4.3.0",
     "prettier": "^1.10.2",
-    "quasar-cli": "^0.15.2"
+    "quasar-cli": "^0.15.2",
+    "ts-loader": "^4.0.1",
+    "typescript": "^2.7.2"
   },
   "engines": {
     "node": ">= 8.9.0",
