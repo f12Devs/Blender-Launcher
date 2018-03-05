@@ -1,15 +1,14 @@
-
 export default [
-  {
-    path: '/',
-    component: () => import('layouts/default'),
-    children: [
-      { path: '', component: () => import('pages/index') }
-    ]
-  },
+    {
+        path: '/home',
+        name: 'main',
+        component: () => import('layouts/main'),
+        props: true
+    },
 
-  { // Always leave this as last one
-    path: '*',
-    component: () => import('pages/404')
-  }
+    {
+        // Always leave this as last one
+        path: '*',
+        component: () => import('pages/404')
+    }
 ]
