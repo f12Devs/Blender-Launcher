@@ -2,7 +2,7 @@ export default [
     {
         path: '/home',
         name: 'main',
-        component: () => import('layouts/main'),
+        component: () => import('layouts/home'),
         props: true
     },
 

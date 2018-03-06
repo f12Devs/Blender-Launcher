@@ -31,5 +31,6 @@ export default {
                     'https://builder.blender.org/download//blender-2.80-3fc2d12-win64-vc14.zip'
             }
         ]
-    }
+    },
+    selected: 'stable'
 }
