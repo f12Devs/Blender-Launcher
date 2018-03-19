@@ -15,15 +15,13 @@
 
             <q-layout-drawer v-model="leftDrawerOpen" content-class="bg-grey-2">
                 <q-list no-border link inset-delimiter>
-                    <q-list-header>Stable Version</q-list-header>
-                    <q-item @click.native="$store.commit('setVersion', 'stable')">
-                        <q-item-side avatar="statics/BlenderDesktopLogo.png" />
-                        <q-item-main label="Blender Stable" sublabel="version 2.79" />
-                    </q-item>
-                    <q-list-header>Experimental Builds</q-list-header>
-                    <q-item v-for="item in $store.state.versions.experimental" :key="item.name" @click.native="$store.commit('setVersion', item.tags)">
-                        <q-item-side icon="code" />
-                        <q-item-main :label="item.tags.join(', ')" :sublabel="item.name" />
+                    <q-list-header>Blender Varients</q-list-header>
+                    <q-item v-for="(item, key) in $store.state.versions" :key="item.name" @click.native="$store.commit('setVersion', key)">
+                        <q-item-side :avatar="key=='Stable' ? 'statics/BlenderDesktopLogo.png': null" :icon="key=='Stable' ? null: 'code'" />
+                        <q-item-main>
+                            <q-item-tile label>{{key.split(',').join(', ')}}</q-item-tile>
+                            <q-item-tile sublabel>{{item.name}}</q-item-tile>
+                        </q-item-main>
                     </q-item>
                 </q-list>
             </q-layout-drawer>
@@ -36,7 +34,7 @@
 </template>
 
 <script>
-import home from './layouts/home'
+import home from './layouts/home.vue'
 export default {
     name: 'App',
     data() {
