@@ -16,9 +16,9 @@
             <q-layout-drawer v-model="leftDrawerOpen" content-class="bg-grey-2">
                 <q-list no-border link inset-delimiter>
                     <q-list-header>Blender Varients:</q-list-header>
-                    <div v-for="(item, key, index) in $store.state.versions" :key="item.name" @click.native="$store.commit('setVersion', key)">
+                    <div v-for="(item, key, index) in $store.state.versions" :key="item.name">
                         <q-item-separator v-if="index!=0" class="q-ma-none"/>
-                        <q-item>
+                        <q-item @click.native="$store.commit('setVersion', key)">
                             <q-item-side :avatar="key=='Stable' ? 'statics/BlenderDesktopLogo.png': null" :icon="key=='Stable' ? null: 'code'" />
                                 <q-item-main>
                                     <q-item-tile label>
