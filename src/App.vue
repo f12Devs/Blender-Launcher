@@ -15,14 +15,21 @@
 
             <q-layout-drawer v-model="leftDrawerOpen" content-class="bg-grey-2">
                 <q-list no-border link inset-delimiter>
-                    <q-list-header>Blender Varients</q-list-header>
-                    <q-item v-for="(item, key) in $store.state.versions" :key="item.name" @click.native="$store.commit('setVersion', key)">
-                        <q-item-side :avatar="key=='Stable' ? 'statics/BlenderDesktopLogo.png': null" :icon="key=='Stable' ? null: 'code'" />
-                        <q-item-main>
-                            <q-item-tile label>{{key.split(',').join(', ')}}</q-item-tile>
-                            <q-item-tile sublabel>{{item.name}}</q-item-tile>
-                        </q-item-main>
-                    </q-item>
+                    <q-list-header>Blender Varients:</q-list-header>
+                    <div v-for="(item, key, index) in $store.state.versions" :key="item.name" @click.native="$store.commit('setVersion', key)">
+                        <q-item-separator v-if="index!=0" class="q-ma-none"/>
+                        <q-item>
+                            <q-item-side :avatar="key=='Stable' ? 'statics/BlenderDesktopLogo.png': null" :icon="key=='Stable' ? null: 'code'" />
+                                <q-item-main>
+                                    <q-item-tile label>
+                                        <q-chip class="q-mr-xs" :color="tag == 'Stable'? 'blue' : tag=='Official' ? 'green' : tag == 'New Compiler' ? 'orange': tag == 'Blender 2.8' ? 'red' : null" v-for="tag in key.split(',')" :key="tag">
+                                            {{tag}}
+                                        </q-chip>
+                                    </q-item-tile>
+                                    <q-item-tile sublabel>{{item.name}}</q-item-tile>
+                                </q-item-main>
+                        </q-item>
+                    </div>
                 </q-list>
             </q-layout-drawer>
 
