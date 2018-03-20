@@ -48,7 +48,7 @@ export default {
                 this.$store.state.versions[this.$store.state.selected].name +
                 '.zip'
             downloadFile({
-                // remoteFile: 'https://www.colorado.edu/conflict/peace/download/peace.zip',
+                // remoteFile: 'https://www.colorado.edu/conflict/peace/download/peace.zip', // sample file for quick downloads
                 remoteFile: this.$store.state.versions[this.selected].download,
                 localFile,
                 onProgress: (received, total) => {

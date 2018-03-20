@@ -13,12 +13,12 @@
                 </q-toolbar>
             </q-layout-header>
 
-            <q-layout-drawer v-model="leftDrawerOpen" content-class="bg-grey-2">
+            <q-layout-drawer behavior="desktop" v-model="leftDrawerOpen" content-class="bg-grey-2">
                 <q-list no-border link inset-delimiter>
                     <q-list-header>Blender Varients:</q-list-header>
                     <div v-for="(item, key, index) in $store.state.versions" :key="item.name">
                         <q-item-separator v-if="index!=0" class="q-ma-none"/>
-                        <q-item @click.native="$store.commit('setVersion', key)">
+                        <q-item v-ripple link @click.native="$store.commit('setVersion', key)">
                             <q-item-side :avatar="key=='Stable' ? 'statics/BlenderDesktopLogo.png': null" :icon="key=='Stable' ? null: 'code'" />
                                 <q-item-main>
                                     <q-item-tile label>
