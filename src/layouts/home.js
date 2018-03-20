@@ -1,5 +1,6 @@
 import downloadFile from '../downloader.js'
 import os from 'os'
+import fs from 'fs-extra'
 import DecompressZip from 'decompress-zip'
 export default {
     name: 'Home',
@@ -38,17 +39,17 @@ export default {
     },
     methods: {
         download () {
+            let version = this.$store.state.selected
             this.$store.commit('setStatus', {
-                target: this.$store.state.selected,
+                target: version,
                 status: 'Downloading'
             })
             let localFile =
                 os.tmpdir() +
                 '/' +
-                this.$store.state.versions[this.$store.state.selected].name +
+                this.$store.state.versions[version].name +
                 '.zip'
             downloadFile({
-                // remoteFile: 'https://www.colorado.edu/conflict/peace/download/peace.zip', // sample file for quick downloads
                 remoteFile: this.$store.state.versions[this.selected].download,
                 localFile,
                 onProgress: (received, total) => {
@@ -57,9 +58,11 @@ export default {
                     )
                 }
             }).then(() => {
+                let extractedPath =
+                    os.homedir() + '/AppData/Local/Blender Launcher/'
                 var unzipper = new DecompressZip(localFile)
                 this.$store.commit('setStatus', {
-                    target: this.$store.state.selected,
+                    target: version,
                     status: 'Installing'
                 })
                 // Add the error event listener
@@ -69,12 +72,47 @@ export default {
 
                 // Notify when everything is extracted
                 unzipper.on('extract', log => {
-                    this.$store.commit('setStatus', {
-                        target: this.$store.state.selected,
-                        status: 'Updated'
-                    })
-                    this.progress = 0
-                    console.log('Finished extracting', log)
+                    let oldPath =
+                        os.homedir() +
+                        '/AppData/Local/Blender Launcher/' +
+                        version
+                    setTimeout(() => {
+                        if (fs.existsSync(oldPath)) {
+                            // Do something
+                            fs.rename(oldPath, oldPath + '-old', () => {
+                                fs.rename(
+                                    extractedPath +
+                                        log[0].folder.split('\\')[0],
+                                    oldPath,
+                                    () => {
+                                        fs.removeSync(oldPath + '-old')
+                                        this.$store.commit('setStatus', {
+                                            target: version,
+                                            status: 'Updated'
+                                        })
+                                        this.$store.commit(
+                                            'setVersion',
+                                            version
+                                        )
+                                        this.progress = 0
+                                    }
+                                )
+                            })
+                        } else {
+                            fs.rename(
+                                extractedPath + log[0].folder.split('\\')[0],
+                                oldPath,
+                                () => {
+                                    this.$store.commit('setStatus', {
+                                        target: version,
+                                        status: 'Updated'
+                                    })
+                                    this.$store.commit('setVersion', version)
+                                    this.progress = 0
+                                }
+                            )
+                        }
+                    }, 500)
                 })
 
                 unzipper.on('progress', (fileIndex, fileCount) => {
@@ -85,12 +123,7 @@ export default {
 
                 // Start extraction of the content
                 unzipper.extract({
-                    path: os.homedir() + '/AppData/Local/Blender Launcher'
-                    // You can filter the files that you want to unpack using the filter option
-                    // filter: function (file) {
-                    // console.log(file);
-                    // return file.type !== "SymbolicLink";
-                    // }
+                    path: extractedPath
                 })
             })
         }

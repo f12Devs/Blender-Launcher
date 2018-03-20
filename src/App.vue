@@ -18,7 +18,7 @@
                     <q-list-header>Blender Varients:</q-list-header>
                     <div v-for="(item, key, index) in $store.state.versions" :key="item.name">
                         <q-item-separator v-if="index!=0" class="q-ma-none"/>
-                        <q-item v-ripple link @click.native="$store.commit('setVersion', key)">
+                        <q-item v-ripple link @click.native="$store.commit('setSelected', key)">
                             <q-item-side :avatar="key=='Stable' ? 'statics/BlenderDesktopLogo.png': null" :icon="key=='Stable' ? null: 'code'" />
                                 <q-item-main>
                                     <q-item-tile label>

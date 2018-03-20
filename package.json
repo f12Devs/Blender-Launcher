@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "decompress-zip": "^0.3.0",
+    "fs-extra": "^5.0.0",
     "hawk": "^7.0.7",
     "quasar-extras": "^1.0.2",
     "request": "^2.83.0",
