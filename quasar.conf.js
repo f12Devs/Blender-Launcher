@@ -62,7 +62,10 @@ module.exports = function (ctx) {
                 'QListHeader',
                 'QItem',
                 'QItemMain',
-                'QItemSide'
+                'QItemSide',
+                'QItemTile',
+                'QItemSeparator',
+                'QChip'
             ],
             directives: ['Ripple'],
             plugins: ['Notify']
