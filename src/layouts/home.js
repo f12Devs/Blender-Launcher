@@ -1,5 +1,6 @@
 import downloadFile from '../downloader.js'
 import fs from 'fs-extra'
+import cp from 'child_process'
 import DecompressZip from 'decompress-zip'
 export default {
     name: 'Home',
@@ -37,6 +38,19 @@ export default {
         }
     },
     methods: {
+        launch () {
+            cp.exec(
+                '"' +
+                    window.process.env.LOCALAPPDATA +
+                    '\\Blender Launcher\\' +
+                    this.$store.state.selected +
+                    '\\blender.exe"',
+                function (err, data) {
+                    console.log(err)
+                    console.log(data.toString())
+                }
+            )
+        },
         download () {
             let version = this.$store.state.selected
             this.$store.commit('setStatus', {
