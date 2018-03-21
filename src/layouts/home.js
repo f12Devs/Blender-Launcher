@@ -53,9 +53,11 @@ export default {
             //     remoteFile: this.$store.state.versions[this.selected].download,
             //     localFile,
             //     onProgress: (received, total) => {
-            //         this.progress = parseInt(
-            //             (received * 100 / total).toFixed(1)
-            //         )
+            //         if (this.$store.state.selected === version) {
+            //             this.progress = parseInt(
+            //                 (received * 100 / total).toFixed(1)
+            //             )
+            //         }
             //     }
             // }).then(() => {
             let extractedPath =
@@ -117,9 +119,11 @@ export default {
             })
 
             unzipper.on('progress', (fileIndex, fileCount) => {
-                this.progress = parseInt(
-                    (fileIndex * 100 / fileCount).toFixed(1)
-                )
+                if (this.$store.state.selected === version) {
+                    this.progress = parseInt(
+                        (fileIndex * 100 / fileCount).toFixed(1)
+                    )
+                }
             })
 
             // Start extraction of the content
