@@ -3,7 +3,7 @@ export default {
         Stable: {
             name: '2.79a',
             download:
-                'https://www.blender.org/download/Blender2.79/blender-2.79a-windows64.zip/'
+                'https://mirror.clarkson.edu/blender/release/Blender2.79/blender-2.79a-windows64.zip'
         },
         Official: {
             name: 'blender-2.79-94b9994-win64',
