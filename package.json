@@ -1,58 +1,57 @@
 {
-  "name": "blender-launcher",
-  "version": "1.0.0",
-  "description": "A tool to manage and update different versions of Blender.",
-  "productName": "Blender Launcher",
-  "cordovaId": "org.cordova.quasar.app",
-  "author": "F12 Developers <f12devs@gmail.com>",
-  "private": true,
-  "scripts": {
-    "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"No test specified\" && exit 0"
-  },
-  "dependencies": {
-    "axios": "^0.17.1",
-    "decompress-zip": "^0.3.0",
-    "fs-extra": "^5.0.0",
-    "hawk": "^7.0.7",
-    "quasar-extras": "^1.0.2",
-    "request": "^2.83.0",
-    "vue": "^2.5.13",
-    "vue-i18n": "^7.3.3",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@types/node": "^9.4.6",
-    "babel-eslint": "^8.2.2",
-    "devtron": "1.4.0",
-    "electron": "^1.8.2",
-    "electron-debug": "^1.5.0",
-    "electron-devtools-installer": "2.2.1",
-    "electron-packager": "9.1.0",
-    "eslint": "^4.18.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-friendly-formatter": "3.0.0",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "3.0.1",
-    "eslint-plugin-vue": "^4.3.0",
-    "prettier": "^1.10.2",
-    "quasar-cli": "^0.15.2",
-    "ts-loader": "^4.0.1",
-    "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
-  },
-  "engines": {
-    "node": ">= 8.9.0",
-    "npm": ">= 5.6.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 10"
-  ]
+    "name": "blender-launcher",
+    "version": "1.0.0",
+    "description": "A tool to manage and update different versions of Blender.",
+    "productName": "Blender Launcher",
+    "cordovaId": "org.cordova.quasar.app",
+    "author": "F12 Developers <f12devs@gmail.com>",
+    "private": true,
+    "scripts": {
+        "lint": "eslint --ext .js,.vue src",
+        "createWindowsInstaller": "node ./scripts/windowsInstaller.js",
+        "test": "echo \"No test specified\" && exit 0"
+    },
+    "dependencies": {
+        "axios": "^0.17.1",
+        "decompress-zip": "^0.3.0",
+        "electron-squirrel-startup": "^1.0.0",
+        "fs-extra": "^5.0.0",
+        "hawk": "^7.0.7",
+        "quasar-extras": "^1.0.2",
+        "request": "^2.83.0",
+        "vue": "^2.5.13",
+        "vue-i18n": "^7.3.3",
+        "vue-router": "^3.0.1",
+        "vuex": "^3.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^9.4.6",
+        "babel-eslint": "^8.2.2",
+        "devtron": "1.4.0",
+        "electron": "^1.8.2",
+        "electron-debug": "^1.5.0",
+        "electron-devtools-installer": "2.2.1",
+        "electron-packager": "9.1.0",
+        "electron-winstaller": "^2.6.4",
+        "eslint": "^4.18.1",
+        "eslint-config-standard": "^11.0.0",
+        "eslint-friendly-formatter": "3.0.0",
+        "eslint-loader": "^1.9.0",
+        "eslint-plugin-import": "^2.9.0",
+        "eslint-plugin-node": "^6.0.1",
+        "eslint-plugin-prettier": "^2.6.0",
+        "eslint-plugin-promise": "^3.6.0",
+        "eslint-plugin-standard": "3.0.1",
+        "eslint-plugin-vue": "^4.3.0",
+        "prettier": "^1.10.2",
+        "quasar-cli": "^0.15.2",
+        "ts-loader": "^4.0.1",
+        "tslint": "^5.9.1",
+        "typescript": "^2.7.2"
+    },
+    "engines": {
+        "node": ">= 8.9.0",
+        "npm": ">= 5.6.0"
+    },
+    "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"]
 }

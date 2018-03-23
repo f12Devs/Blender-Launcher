@@ -8,6 +8,11 @@
         "type": "shell",
         "command": "quasar dev -m electron",
         "problemMatcher": []
+    },
+    {
+        "type": "npm",
+        "script": "createWindowsInstaller",
+        "problemMatcher": []
     }
 ]
 }
