@@ -23,7 +23,7 @@ export default {
         'Blender 2.8,New Compiler': {
             name: 'blender-2.80-ebbb55d-win64-vc14',
             download:
-                'https://builder.blender.org/download/blender-2.80-7701f9e-win64-vc14.zip'
+                'https://builder.blender.org/download/blender-2.80-6939523-win64-vc14.zip'
         }
     },
     installed: {},

@@ -65,9 +65,10 @@ module.exports = function (ctx) {
                 'QItemSide',
                 'QItemTile',
                 'QItemSeparator',
-                'QChip'
+                'QChip',
+                'QPopover'
             ],
-            directives: ['Ripple'],
+            directives: ['Ripple', 'CloseOverlay'],
             plugins: ['Notify']
         },
         // animations: 'all' --- includes all animations

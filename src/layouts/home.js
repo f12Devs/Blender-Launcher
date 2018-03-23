@@ -153,6 +153,23 @@ export default {
                         status: 'Update Avalible'
                     })
                 })
+        },
+        uninstall () {
+            let target = this.$store.state.selected
+            fs.remove(
+                window.process.env.LOCALAPPDATA + '/Blender Launcher/' + target,
+                err => {
+                    if (err) {
+                        alert('Uninstall Error:' + err)
+                        throw err
+                    } else {
+                        this.$store.commit('setStatus', {
+                            target: target,
+                            status: 'Not Installed'
+                        })
+                    }
+                }
+            )
         }
     },
     props: ['tags']
