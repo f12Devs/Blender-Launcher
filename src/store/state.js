@@ -26,13 +26,7 @@ export default {
                 'https://builder.blender.org/download/blender-2.80-7701f9e-win64-vc14.zip'
         }
     },
-    installed: {
-        Stable: { version: '2.79', status: 'Update Avalible' },
-        'Blender 2.8,New Compiler': {
-            version: 'blender-2.80-3fc2d12-win64-vc14',
-            status: 'Update Avalible'
-        }
-    },
+    installed: {},
     installing: [],
     selected: 'Stable'
 }

@@ -40,18 +40,7 @@
     </div>
 </template>
 
-<script>
-import home from './layouts/home.vue'
-export default {
-    name: 'App',
-    data() {
-        return {
-            leftDrawerOpen: false
-        }
-    },
-    components: { home }
-}
-</script>
+<script src="./appScript.js"></script>
 
 <style>
 

@@ -100,11 +100,10 @@ export default {
                             ? extractedPath + log[0].folder.split('\\')[0]
                             : extractedPath + log[0].deflated.split('\\')[0]
                         fs.appendFile(
-                            installedPath + '/blenderLauncher.js',
-                            `export default {name: '${varient}', version: '${version}'}`,
+                            installedPath + '/blenderLauncher.json',
+                            `{"name": "${varient}", "version": "${version}"}`,
                             function (err) {
                                 if (err) throw err
-                                console.log('Saved!')
                             }
                         )
                         if (fs.existsSync(oldPath)) {

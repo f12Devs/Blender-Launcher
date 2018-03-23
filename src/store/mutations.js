@@ -1,3 +1,4 @@
+import Vue from 'vue'
 export default {
     setSelected: (state, version) => {
         state.selected = version
@@ -7,5 +8,9 @@ export default {
     },
     setVersion: (state, version) => {
         state.installed[version].version = state.versions[version].name
+    },
+    setVarient: (state, varient) => {
+        Vue.set(state.installed, varient.target, varient.data)
+        // state.installed[varient.target] = varient.data
     }
 }
