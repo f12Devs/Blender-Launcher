@@ -1,5 +1,4 @@
 import { app, BrowserWindow } from 'electron'
-if (require('electron-squirrel-startup')) app.quit()
 
 /**
  * Set `__statics` path to static files in production;

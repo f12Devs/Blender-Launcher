@@ -9,12 +9,14 @@
     "scripts": {
         "lint": "eslint --ext .js,.vue src",
         "createWindowsInstaller": "node ./scripts/windowsInstaller.js",
-        "test": "echo \"No test specified\" && exit 0"
+        "test": "echo \"No test specified\" && exit 0",
+        "dist": "quasar build -m electron&&electron-builder",
+        "dist-all-platforms":
+            "quasar build -m electron&&electron-builder --win --linux"
     },
     "dependencies": {
         "axios": "^0.17.1",
         "decompress-zip": "^0.3.0",
-        "electron-squirrel-startup": "^1.0.0",
         "fs-extra": "^5.0.0",
         "hawk": "^7.0.7",
         "quasar-extras": "^1.0.2",
@@ -29,6 +31,7 @@
         "babel-eslint": "^8.2.2",
         "devtron": "1.4.0",
         "electron": "^1.8.2",
+        "electron-builder": "^20.6.2",
         "electron-debug": "^1.5.0",
         "electron-devtools-installer": "2.2.1",
         "electron-packager": "9.1.0",
@@ -53,9 +56,5 @@
         "node": ">= 8.9.0",
         "npm": ">= 5.6.0"
     },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not ie <= 10"
-    ]
+    "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"]
 }
