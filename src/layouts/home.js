@@ -11,11 +11,7 @@ export default {
     },
     computed: {
         selected () {
-            // if (typeof(this.$store.state.selected)=='string') {
             return this.$store.state.selected
-            // } else {
-            //     return this.$store.state.selected.toString()
-            // }
         },
         installing () {
             if (
@@ -30,11 +26,7 @@ export default {
             }
         },
         installedVersion () {
-            if (typeof this.$store.state.selected === 'string') {
-                return this.$store.state.installed[this.selected]
-            } else {
-                return this.$store.state.installed[this.selected.toString()]
-            }
+            return this.$store.state.installed[this.selected]
         }
     },
     methods: {
