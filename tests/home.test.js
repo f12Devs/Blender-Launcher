@@ -12,6 +12,7 @@ jest.mock('fs-extra')
 import DecompressZip, { mockExtract, mockOn } from 'decompress-zip'
 jest.mock('decompress-zip')
 import download from '@/downloader.js'
+import { VERSION } from 'upath'
 jest.mock('@/downloader.js')
 global.alert = jest.fn()
 
@@ -201,5 +202,12 @@ describe('Component', () => {
                 window.process.env.LOCALAPPDATA +
                 '\\Blender Launcher\\Stable\\blender.exe"'
         )
+    })
+    test('download works with different varient selected', async () => {
+        const vm = shallow(home, { store, localVue }).vm
+        vm.$store.commit('setSelected', 'Official,New Compiler')
+        expect(() => {
+            vm.download()
+        }).not.toThrow()
     })
 })
