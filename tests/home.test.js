@@ -12,7 +12,6 @@ jest.mock('fs-extra')
 import DecompressZip, { mockExtract, mockOn } from 'decompress-zip'
 jest.mock('decompress-zip')
 import download from '@/downloader.js'
-import { VERSION } from 'upath'
 jest.mock('@/downloader.js')
 global.alert = jest.fn()
 
