@@ -9,10 +9,26 @@
     "scripts": {
         "lint": "eslint --ext .js,.vue src",
         "createWindowsInstaller": "node ./scripts/windowsInstaller.js",
-        "test": "echo \"No test specified\" && exit 0",
+        "test": "jest",
         "dist": "quasar build -m electron&&electron-builder",
-        "dist-all-platforms":
-            "quasar build -m electron&&electron-builder --win --linux"
+        "dist-all-platforms": "quasar build -m electron&&electron-builder --win --linux"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "vue"
+        ],
+        "transform": {
+            "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+            ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+        },
+        "moduleNameMapper": {
+            "^@/(.*)$": "<rootDir>/src/$1"
+        },
+        "transformIgnorePatterns": [
+            "node_modules/(?!(quasar-framework)/)"
+        ]
     },
     "dependencies": {
         "axios": "^0.17.1",
@@ -28,6 +44,7 @@
     },
     "devDependencies": {
         "@types/node": "^9.4.6",
+        "@vue/test-utils": "^1.0.0-beta.12",
         "babel-eslint": "^8.2.2",
         "devtron": "1.4.0",
         "electron": "^1.8.2",
@@ -46,15 +63,22 @@
         "eslint-plugin-promise": "^3.6.0",
         "eslint-plugin-standard": "3.0.1",
         "eslint-plugin-vue": "^4.3.0",
+        "flush-promises": "^1.0.0",
+        "jest": "^22.4.3",
         "prettier": "^1.10.2",
         "quasar-cli": "^0.15.2",
         "ts-loader": "^4.0.1",
         "tslint": "^5.9.1",
-        "typescript": "^2.7.2"
+        "typescript": "^2.7.2",
+        "vue-jest": "^2.3.0"
     },
     "engines": {
         "node": ">= 8.9.0",
         "npm": ">= 5.6.0"
     },
-    "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"]
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 10"
+    ]
 }

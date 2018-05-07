@@ -19,7 +19,23 @@ module.exports = {
     globals: {
         ga: true, // Google Analytics
         cordova: true,
-        __statics: true
+        __statics: true,
+        jest: true,
+        Promise: true,
+        test: true,
+        expect: true,
+        mockFn: true,
+        config: true,
+        afterEach: true,
+        beforeEach: true,
+        describe: true,
+        it: true,
+        runs: true,
+        waitsFor: true,
+        pit: true,
+        require: true,
+        xdescribe: true,
+        xit: true
     },
     // add your custom rules here
     rules: {
