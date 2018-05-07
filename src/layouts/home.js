@@ -46,8 +46,7 @@ export default {
                     this.$store.state.selected +
                     '\\blender.exe"',
                 function (err, data) {
-                    console.log(err)
-                    console.log(data.toString())
+                    if (err) alert('Launch ' + err)
                 }
             )
         },
@@ -80,13 +79,13 @@ export default {
                     })
                     // Add the error event listener
                     unzipper.on('error', err => {
-                        alert('Install ' + err)
                         this.progress = 0
                         this.$store.commit('setStatus', {
                             target: varient,
                             status: 'Update Avalible'
                         })
-                        console.log('Caught an error', err)
+                        alert('Install ' + err)
+                        // console.log('Caught an error', err)
                     })
 
                     // Notify when everything is extracted
@@ -102,8 +101,44 @@ export default {
                         fs.appendFile(
                             installedPath + '/blenderLauncher.json',
                             `{"name": "${varient}", "version": "${version}"}`,
-                            function (err) {
-                                if (err) throw err
+                            err => {
+                                if (err) {
+                                    setTimeout(() => {
+                                        fs.appendFile(
+                                            installedPath +
+                                                '/blenderLauncher.json',
+                                            `{"name": "${varient}", "version": "${version}"}`,
+                                            err => {
+                                                if (err) {
+                                                    setTimeout(() => {
+                                                        fs.appendFile(
+                                                            installedPath +
+                                                                '/blenderLauncher.json',
+                                                            `{"name": "${varient}", "version": "${version}"}`,
+                                                            err => {
+                                                                if (err) {
+                                                                    this.progress = 0
+                                                                    this.$store.commit(
+                                                                        'setStatus',
+                                                                        {
+                                                                            target: varient,
+                                                                            status:
+                                                                                'Update Avalible'
+                                                                        }
+                                                                    )
+                                                                    alert(
+                                                                        'Install ' +
+                                                                            err
+                                                                    )
+                                                                }
+                                                            }
+                                                        )
+                                                    }, 500)
+                                                }
+                                            }
+                                        )
+                                    }, 500)
+                                }
                             }
                         )
                         if (fs.existsSync(oldPath)) {
@@ -146,10 +181,10 @@ export default {
                     })
                 })
                 .catch(err => {
-                    alert('Download Error:' + err)
+                    alert('Download ' + err)
                     this.progress = 0
                     this.$store.commit('setStatus', {
-                        target: version,
+                        target: varient,
                         status: 'Update Avalible'
                     })
                 })
@@ -160,8 +195,7 @@ export default {
                 window.process.env.LOCALAPPDATA + '/Blender Launcher/' + target,
                 err => {
                     if (err) {
-                        alert('Uninstall Error:' + err)
-                        throw err
+                        alert('Uninstall ' + err)
                     } else {
                         this.$store.commit('setStatus', {
                             target: target,
