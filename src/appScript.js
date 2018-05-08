@@ -9,7 +9,7 @@ export default {
     },
     created () {
         let downloadFolder =
-            window.process.env.LOCALAPPDATA + '\\Blender Launcher'
+            window.process.env.LOCALAPPDATA + '/Blender Launcher'
         Object.keys(this.$store.state.versions).forEach(key => {
             this.$store.commit('setVarient', {
                 target: key,
@@ -20,7 +20,7 @@ export default {
             if (err) throw err
             files.forEach(file => {
                 fs.readFile(
-                    downloadFolder + '\\' + file + '\\blenderLauncher.json',
+                    downloadFolder + '/' + file + '/blenderLauncher.json',
                     'utf8',
                     (err, fileContents) => {
                         if (err) throw err

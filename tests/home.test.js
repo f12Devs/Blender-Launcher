@@ -199,7 +199,7 @@ describe('Component', () => {
         expect(cp.exec.mock.calls[0][0]).toBe(
             '"' +
                 window.process.env.LOCALAPPDATA +
-                '\\Blender Launcher\\Stable\\blender.exe"'
+                '/Blender Launcher/Stable/blender.exe"'
         )
     })
     test('download works with different varient selected', async () => {

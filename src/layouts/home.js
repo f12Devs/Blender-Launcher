@@ -34,9 +34,9 @@ export default {
             cp.exec(
                 '"' +
                     window.process.env.LOCALAPPDATA +
-                    '\\Blender Launcher\\' +
+                    '/Blender Launcher/' +
                     this.$store.state.selected +
-                    '\\blender.exe"',
+                    '/blender.exe"',
                 function (err, data) {
                     if (err) alert('Launch ' + err)
                 }
@@ -88,8 +88,8 @@ export default {
                             varient
                         // setTimeout(() => {
                         let installedPath = log[0].folder
-                            ? extractedPath + log[0].folder.split('\\')[0]
-                            : extractedPath + log[0].deflated.split('\\')[0]
+                            ? extractedPath + log[0].folder.split('/')[0]
+                            : extractedPath + log[0].deflated.split('/')[0]
                         fs.appendFile(
                             installedPath + '/blenderLauncher.json',
                             `{"name": "${varient}", "version": "${version}"}`,
