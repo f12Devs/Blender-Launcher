@@ -216,12 +216,14 @@ describe('component', () => {
             )
         })
         test('handles launch error gracefully', () => {
+            const vm = shallow(home, { store, localVue }).vm
             cp.exec = jest.fn().mockImplementationOnce((target, callback) => {
                 callback(new Error('this is the error'))
+            })
+            vm.launch()
                 expect(global.alert).toBeCalledWith(
                     'Launch Error: this is the error'
                 )
             })
         })
     })
-})
