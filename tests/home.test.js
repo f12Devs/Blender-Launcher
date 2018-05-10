@@ -9,7 +9,7 @@ import cp from 'child_process'
 jest.mock('child_process')
 import fs from 'fs-extra'
 jest.mock('fs-extra')
-import DecompressZip, { mockExtract, mockOn } from 'decompress-zip'
+import { mockExtract, mockOn } from 'decompress-zip'
 jest.mock('decompress-zip')
 import download from '@/downloader.js'
 jest.mock('@/downloader.js')
@@ -24,11 +24,7 @@ localVue.use(Quasar, {
 let store
 describe('component', () => {
     beforeEach(() => {
-        // fs.mockClear()
-        global.alert.mockClear()
-        download.mockClear()
-        DecompressZip.mockClear()
-        mockExtract.mockClear()
+        jest.clearAllMocks()
         Object.keys(state.versions).forEach(k => {
             state.installed[k] = {
                 version: 'oldVersion',
