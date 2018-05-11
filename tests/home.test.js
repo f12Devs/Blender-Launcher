@@ -217,9 +217,9 @@ describe('component', () => {
                 callback(new Error('this is the error'))
             })
             vm.launch()
-                expect(global.alert).toBeCalledWith(
-                    'Launch Error: this is the error'
-                )
-            })
+            expect(global.alert).toBeCalledWith(
+                'Launch Error: this is the error'
+            )
         })
     })
+})
