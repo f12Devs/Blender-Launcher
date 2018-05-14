@@ -1,3 +1,9 @@
 module.exports = {
-  lintOnSave: false
+  lintOnSave: false,
+
+  pluginOptions: {
+    quasar: {
+      theme: "mat"
+    }
+  }
 };
