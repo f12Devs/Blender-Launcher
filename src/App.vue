@@ -60,23 +60,23 @@
 </template>
 
 <script>
-import { openURL } from "quasar";
-import HelloWorld from "./components/HelloWorld.vue";
+import { openURL } from 'quasar'
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: "LayoutDefault",
-  components: {
-    HelloWorld
-  },
-  data() {
-    return {
-      leftDrawerOpen: this.$q.platform.is.desktop
-    };
-  },
-  methods: {
-    openURL
-  }
-};
+    name: 'LayoutDefault',
+    components: {
+        HelloWorld
+    },
+    data () {
+        return {
+            leftDrawerOpen: this.$q.platform.is.desktop
+        }
+    },
+    methods: {
+        openURL
+    }
+}
 </script>
 
 <style>
