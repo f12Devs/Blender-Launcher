@@ -1,7 +1,7 @@
 module.exports = {
-  root: true,
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/prettier'
-  ]
+    root: true,
+    extends: ['plugin:vue/essential', '@vue/standard'],
+    rules: {
+        indent: [1, 4]
+    }
 }
