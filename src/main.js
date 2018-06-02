@@ -20,7 +20,14 @@ import Quasar, {
     QItemSeparator,
     QItem,
     QItemSide,
-    QItemMain
+    QItemMain,
+    QIcon,
+    QItemTile,
+    QChip,
+    QBtnGroup,
+    QPopover,
+    Ripple,
+    CloseOverlay
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -38,9 +45,17 @@ Vue.use(Quasar, {
         QItemSeparator,
         QItem,
         QItemSide,
-        QItemMain
+        QItemMain,
+        QIcon,
+        QItemTile,
+        QChip,
+        QBtnGroup,
+        QPopover
     },
-    directives: {},
+    directives: {
+        Ripple,
+        CloseOverlay
+    },
     plugins: {}
 })
 

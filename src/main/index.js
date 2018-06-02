@@ -14,6 +14,7 @@ function createMainWindow () {
 
     if (isDevelopment) {
         window.webContents.openDevTools()
+        BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/nhdogjmejiglipccpnnnanhbledajbpd/4.1.4_0')
     }
 
     if (isDevelopment) {
