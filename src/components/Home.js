@@ -88,8 +88,10 @@ export default {
                             varient
                         // setTimeout(() => {
                         let installedPath = log[0].folder
-                            ? extractedPath + log[0].folder.split('/')[0]
-                            : extractedPath + log[0].deflated.split('/')[0]
+                            ? extractedPath +
+                              log[0].folder.replace('\\', '/').split('/')[0]
+                            : extractedPath +
+                              log[0].deflated.replace('\\', '/').split('/')[0]
                         fs.appendFile(
                             installedPath + '/blenderLauncher.json',
                             `{"name": "${varient}", "version": "${version}"}`,
