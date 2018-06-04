@@ -39,6 +39,7 @@
 </template>
 
 <script>
+/* global __static */
 import Home from './components/Home.vue'
 import updateInstalled from './updateInstalled'
 import path from 'path'
