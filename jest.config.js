@@ -11,6 +11,9 @@ module.exports = {
     },
     snapshotSerializers: ['jest-serializer-vue'],
     testMatch: [
-        '<rootDir>/(tests/unit/**/*.spec.(ts|tsx|js)|**/__tests__/*.(ts|tsx|js))'
+        '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
+    ],
+    transformIgnorePatterns: [
+        'node_modules/(?!(quasar-framework|quasar-extras|react-native-button)/)'
     ]
 }
