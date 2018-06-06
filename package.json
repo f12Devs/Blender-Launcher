@@ -3,12 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
         "test": "vue-cli-service test:unit --no-cache",
         "lint": "vue-cli-service lint",
-        "build:electron": "vue-cli-service build:electron",
-        "serve:electron": "vue-cli-service serve:electron"
+        "build": "vue-cli-service build:electron",
+        "serve": "vue-cli-service serve:electron"
     },
     "dependencies": {
         "decompress-zip": "^0.3.1",
