@@ -27,6 +27,10 @@
                             </q-item-tile>
                             <q-item-tile sublabel>{{item.name}}</q-item-tile>
                         </q-item-main>
+                        <q-item-side v-if="$store.state.installed[key].status === 'Downloading' || $store.state.installed[key].status === 'Installing'" right>
+                            <q-spinner size="30px"></q-spinner>
+                        </q-item-side>
+                        <q-tooltip delay=250>{{$store.state.installed[key].status }}</q-tooltip>
                     </q-item>
                 </div>
             </q-list>

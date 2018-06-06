@@ -27,7 +27,9 @@ import Quasar, {
     QBtnGroup,
     QPopover,
     Ripple,
-    CloseOverlay
+    CloseOverlay,
+    QSpinner,
+    QTooltip
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -50,7 +52,9 @@ Vue.use(Quasar, {
         QItemTile,
         QChip,
         QBtnGroup,
-        QPopover
+        QPopover,
+        QSpinner,
+        QTooltip
     },
     directives: {
         Ripple,
