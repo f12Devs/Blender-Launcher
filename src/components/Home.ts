@@ -1,19 +1,20 @@
-import downloadFile from '../downloader.js'
+import downloadFile from '../downloader'
 import fs from 'fs-extra'
 import cp from 'child_process'
 import DecompressZip from 'decompress-zip'
-export default {
+import Vue from 'vue'
+export default Vue.extend({
     name: 'Home',
-    data () {
+    data() {
         return {
             progress: 0
         }
     },
     computed: {
-        selected () {
+        selected() {
             return this.$store.state.selected
         },
-        installing () {
+        installing() {
             if (
                 this.$store.state.installed[this.$store.state.selected]
                     .status === 'Downloading' ||
@@ -25,24 +26,24 @@ export default {
                 return false
             }
         },
-        installedVersion () {
+        installedVersion() {
             return this.$store.state.installed[this.selected]
         }
     },
     methods: {
-        launch () {
+        launch() {
             cp.exec(
                 '"' +
                     window.process.env.LOCALAPPDATA +
                     '/Blender Launcher/' +
                     this.$store.state.selected +
                     '/blender.exe"',
-                function (err, data) {
+                function(err, data) {
                     if (err) alert('Launch ' + err)
                 }
             )
         },
-        download () {
+        download() {
             let varient = this.$store.state.selected
             let version = this.$store.state.versions[varient].name
             this.$store.commit('setStatus', {
@@ -56,7 +57,7 @@ export default {
                 onProgress: (received, total) => {
                     if (this.$store.state.selected === varient) {
                         this.progress = parseInt(
-                            (received * 100 / total).toFixed(1)
+                            ((received * 100) / total).toFixed(1)
                         )
                     }
                 }
@@ -164,7 +165,7 @@ export default {
                     unzipper.on('progress', (fileIndex, fileCount) => {
                         if (this.$store.state.selected === varient) {
                             this.progress = parseInt(
-                                (fileIndex * 100 / fileCount).toFixed(1)
+                                ((fileIndex * 100) / fileCount).toFixed(1)
                             )
                         }
                     })
@@ -183,7 +184,7 @@ export default {
                     })
                 })
         },
-        uninstall () {
+        uninstall() {
             let target = this.$store.state.selected
             fs.remove(
                 window.process.env.LOCALAPPDATA + '/Blender Launcher/' + target,
@@ -201,4 +202,4 @@ export default {
         }
     },
     props: ['tags']
-}
+})

@@ -3,17 +3,17 @@ import flushPromises from 'flush-promises'
 import Vuex from 'vuex'
 import Quasar, * as All from 'quasar-framework/dist/quasar.mat.esm.js'
 // import '../../src/quasarImport'
-import mutations from '@/store/mutations.js'
-import state from '@/store/state.js'
+import mutations from '@/store/mutations'
+import state from '@/store/state'
 import home from '@/components/home.vue'
 import cp from 'child_process'
 import fs from 'fs-extra'
 import { mockExtract, mockOn } from 'decompress-zip'
-import download from '@/downloader.js'
+import download from '@/downloader'
 jest.mock('child_process')
 jest.mock('fs-extra')
 jest.mock('decompress-zip')
-jest.mock('@/downloader.js')
+jest.mock('@/downloader')
 global.alert = jest.fn()
 
 const localVue = createLocalVue()
@@ -43,7 +43,7 @@ describe('component', () => {
             fs.existsSync.mockImplementationOnce(path => {
                 if (
                     path ===
-          window.process.env.LOCALAPPDATA + '/Blender Launcher/Stable'
+                    window.process.env.LOCALAPPDATA + '/Blender Launcher/Stable'
                 ) {
                     return true
                 } else return false
@@ -54,7 +54,8 @@ describe('component', () => {
             fs.removeSync = jest.fn()
             await vm.download()
             expect(fs.rename).toHaveBeenCalledTimes(2)
-            let oldPath = window.process.env.LOCALAPPDATA + '/Blender Launcher/Stable'
+            let oldPath =
+                window.process.env.LOCALAPPDATA + '/Blender Launcher/Stable'
             expect(fs.rename.mock.calls[0][0]).toBe(oldPath)
             expect(fs.rename.mock.calls[0][1]).toBe(oldPath + '-old')
             expect(fs.rename.mock.calls[1][0]).toBe(
@@ -72,13 +73,13 @@ describe('component', () => {
             )
             expect(download.mock.calls[0][0].localFile).toBe(
                 window.process.env.TEMP +
-          '/' +
-          vm.$store.state.versions.Stable.name +
-          '.zip'
+                    '/' +
+                    vm.$store.state.versions.Stable.name +
+                    '.zip'
             )
             expect(fs.appendFile.mock.calls[0][0]).toBe(
                 window.process.env.LOCALAPPDATA +
-          '/Blender Launcher/Stable/blenderLauncher.json'
+                    '/Blender Launcher/Stable/blenderLauncher.json'
             )
             expect(fs.appendFile.mock.calls[0][1]).toBe(
                 `{"name": "Stable", "version": "${
@@ -95,7 +96,9 @@ describe('component', () => {
             })
             const vm = shallowMount(home, { store, localVue }).vm
             expect(vm.progress).toBe(0)
-            expect(vm.$store.state.installed.Stable.status).toBe('Not Installed')
+            expect(vm.$store.state.installed.Stable.status).toBe(
+                'Not Installed'
+            )
             expect(vm.installing).toBeFalsy()
             expect(download).not.toBeCalled()
             vm.download()
@@ -123,15 +126,21 @@ describe('component', () => {
             })
             vm.download()
             await flushPromises()
-            expect(global.alert).toBeCalledWith('Download Error: this is the error')
-            expect(vm.$store.state.installed.Stable.status).toBe('Update Avalible')
+            expect(global.alert).toBeCalledWith(
+                'Download Error: this is the error'
+            )
+            expect(vm.$store.state.installed.Stable.status).toBe(
+                'Update Avalible'
+            )
             expect(vm.progress).toBe(0)
         })
         test('handles extract error gracefully', async done => {
             global.alert = jest.fn().mockImplementationOnce(message => {
                 expect(message).toBe('Install Error: this is the error')
                 expect(vm.progress).toBe(0)
-                expect(vm.$store.state.installed.Stable.status).toBe('Update Avalible')
+                expect(vm.$store.state.installed.Stable.status).toBe(
+                    'Update Avalible'
+                )
                 done()
             })
             const vm = shallowMount(home, { store, localVue }).vm
@@ -177,7 +186,9 @@ describe('component', () => {
             expect(fs.remove.mock.calls[0][0]).toBe(
                 window.process.env.LOCALAPPDATA + '/Blender Launcher/Stable'
             )
-            expect(vm.$store.state.installed.Stable.status).toBe('Not Installed')
+            expect(vm.$store.state.installed.Stable.status).toBe(
+                'Not Installed'
+            )
         })
         test('handles uninstall error gracefully', () => {
             fs.remove = jest.fn().mockImplementationOnce((target, callback) => {
@@ -185,7 +196,9 @@ describe('component', () => {
             })
             const vm = shallowMount(home, { store, localVue }).vm
             vm.uninstall()
-            expect(global.alert).toBeCalledWith('Uninstall Error: this is the error')
+            expect(global.alert).toBeCalledWith(
+                'Uninstall Error: this is the error'
+            )
         })
     })
     describe('launch', () => {
@@ -195,8 +208,8 @@ describe('component', () => {
             expect(cp.exec).toBeCalled()
             expect(cp.exec.mock.calls[0][0]).toBe(
                 '"' +
-          window.process.env.LOCALAPPDATA +
-          '/Blender Launcher/Stable/blender.exe"'
+                    window.process.env.LOCALAPPDATA +
+                    '/Blender Launcher/Stable/blender.exe"'
             )
         })
         test('handles launch error gracefully', () => {
@@ -205,7 +218,9 @@ describe('component', () => {
                 callback(new Error('this is the error'))
             })
             vm.launch()
-            expect(global.alert).toBeCalledWith('Launch Error: this is the error')
+            expect(global.alert).toBeCalledWith(
+                'Launch Error: this is the error'
+            )
         })
     })
 })
