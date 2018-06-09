@@ -1,16 +1,18 @@
 import Vue from 'vue'
-export default {
-    setSelected: (state, version) => {
-        state.selected = version
+import { MutationTree } from 'vuex'
+import { RootState, Varient } from './types'
+const mutations: MutationTree<RootState> = {
+    setSelected: (state: RootState, selection: string) => {
+        state.selected = selection
     },
-    setStatus: (state, status) => {
-        state.installed[status.target].status = status.status
-    },
-    setVersion: (state, version) => {
-        state.installed[version].version = state.versions[version].name
-    },
-    setVarient: (state, varient) => {
-        Vue.set(state.installed, varient.target, varient.data)
-        // state.installed[varient.target] = varient.data
+    updateVarient: (state: RootState, payload: Varient) => {
+        let target = state.varients.find(v => v.name === payload.name)
+        if (target) {
+            Vue.set(state.varients, state.varients.indexOf(target), {
+                ...target,
+                ...payload
+            })
+        }
     }
 }
+export default mutations

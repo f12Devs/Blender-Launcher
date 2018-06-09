@@ -1,12 +1,14 @@
+import { Varient, RootState } from './store/types'
 import fs from 'fs'
-export default store => {
+import { Store } from 'vuex'
+export default (store: Store<RootState>) => {
     let downloadFolder = window.process.env.LOCALAPPDATA + '/Blender Launcher'
-    Object.keys(store.state.versions).forEach(key => {
-        store.commit('setVarient', {
-            target: key,
-            data: { status: 'Not Installed' }
-        })
-    })
+    // store.state.varients.forEach(varient => {
+    //     store.commit('updateVarient', {
+    //         target: store.state.varients.indexOf(varient),
+    //         data: { status: 'Not Installed' }
+    //     })
+    // })
     fs.readdir(downloadFolder, (err, files) => {
         if (err) throw err
         files.forEach(file => {
@@ -16,24 +18,21 @@ export default store => {
                 (err, fileContents) => {
                     if (err) throw err
                     let contents = JSON.parse(fileContents)
-                    if (
-                        store.state.versions[contents.name].name ===
-                        contents.version
-                    ) {
-                        store.commit('setVarient', {
-                            target: contents.name,
-                            data: {
-                                status: 'Updated',
-                                version: contents.version
-                            }
+                    let storeVarient = store.state.varients.find(
+                        (varient: Varient) => varient.name === contents.name
+                    )
+                    if (storeVarient == null) return
+                    if (storeVarient.remoteVersion === contents.version) {
+                        store.commit('updateVarient', {
+                            name: contents.name,
+                            status: 'Updated',
+                            localVersion: contents.version
                         })
                     } else {
-                        store.commit('setVarient', {
-                            target: contents.name,
-                            data: {
-                                status: 'Update Avalible',
-                                version: contents.version
-                            }
+                        store.commit('updateVarient', {
+                            name: contents.name,
+                            status: 'Update Avalible',
+                            localVersion: contents.version
                         })
                     }
                 }

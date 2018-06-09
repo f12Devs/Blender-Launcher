@@ -1,32 +1,40 @@
 export default {
-    versions: {
-        Stable: {
-            name: '2.79a',
+    varients: [
+        {
+            name: 'Stable',
+            remoteVersion: '2.79a',
             download:
-                'https://mirror.clarkson.edu/blender/release/Blender2.79/blender-2.79a-windows64.zip'
+                'https://nofile.io/g/9ONXHbNlawTXkubTfTQmO2K6alRvEI7KJpuIU8vdJmUyI7vaMXrvi7XekpjixPoB/thing.zip/',
+            status: 'Not Installed'
         },
-        Official: {
-            name: 'blender-2.79-94b9994-win64',
+        {
+            name: 'Official',
+            remoteVersion: 'blender-2.79-94b9994-win64',
             download:
-                'https://builder.blender.org/download//blender-2.79-94b9994-win64.zip'
+                'https://builder.blender.org/download//blender-2.79-94b9994-win64.zip',
+            status: 'Not Installed'
         },
-        'Official,New Compiler': {
-            name: 'blender-2.79-94b9994-win64-vc14',
+        {
+            name: 'Official,New Compiler',
+            remoteVersion: 'blender-2.79-94b9994-win64-vc14',
             download:
-                'https://builder.blender.org/download//blender-2.79-94b9994-win64-vc14.zip'
+                'https://builder.blender.org/download//blender-2.79-94b9994-win64-vc14.zip',
+            status: 'Not Installed'
         },
-        'Blender 2.8': {
-            name: 'blender-2.80-3fc2d12-win64',
+        {
+            name: 'Blender 2.8',
+            remoteVersion: 'blender-2.80-3fc2d12-win64',
             download:
-                'https://builder.blender.org/download//blender-2.80-3fc2d12-win64.zip'
+                'https://builder.blender.org/download//blender-2.80-3fc2d12-win64.zip',
+            status: 'Not Installed'
         },
-        'Blender 2.8,New Compiler': {
-            name: 'blender-2.80-ebbb55d-win64-vc14',
+        {
+            name: 'Blender 2.8,New Compiler',
+            remoteVersion: 'blender-2.80-ebbb55d-win64-vc14',
             download:
-                'https://builder.blender.org/download/blender-2.80-6939523-win64-vc14.zip'
+                'https://builder.blender.org/download/blender-2.80-6939523-win64-vc14.zip',
+            status: 'Not Installed'
         }
-    },
-    installed: {},
-    installing: [],
+    ],
     selected: 'Stable'
 }

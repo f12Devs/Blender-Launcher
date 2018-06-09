@@ -15,22 +15,22 @@
         <q-layout-drawer behavior="desktop" v-model="leftDrawerOpen" content-class="bg-grey-2">
             <q-list no-border link inset-delimiter>
                 <q-list-header>Blender Varients:</q-list-header>
-                <div v-for="(item, key, index) in $store.state.versions" :key="item.name">
+                <div v-for="(item, index) in $store.state.varients" :key="item.name">
                     <q-item-separator v-if="index!=0" class="q-ma-none" />
-                    <q-item v-ripple link @click.native="$store.commit('setSelected', key)">
-                        <q-item-side :avatar="key=='Stable' ? logoPath: null" :icon="key=='Stable' ? null: 'code'" />
+                    <q-item v-ripple link @click.native="$store.commit('setSelected', item.name)">
+                        <q-item-side :avatar="item.name=='Stable' ? logoPath: null" :icon="item.name=='Stable' ? null: 'code'" />
                         <q-item-main>
                             <q-item-tile label>
-                                <q-chip class="q-mr-xs" :color="tag == 'Stable'? 'blue' : tag=='Official' ? 'green' : tag == 'New Compiler' ? 'orange': tag == 'Blender 2.8' ? 'red' : null" v-for="tag in key.split(',')" :key="tag">
+                                <q-chip class="q-mr-xs" :color="tag == 'Stable'? 'blue' : tag=='Official' ? 'green' : tag == 'New Compiler' ? 'orange': tag == 'Blender 2.8' ? 'red' : null" v-for="tag in item.name.split(',')" :key="tag">
                                     {{tag}}
                                 </q-chip>
                             </q-item-tile>
                             <q-item-tile sublabel>{{item.name}}</q-item-tile>
                         </q-item-main>
-                        <q-item-side v-if="$store.state.installed[key].status === 'Downloading' || $store.state.installed[key].status === 'Installing'" right>
+                        <q-item-side v-if="item.status === 'Downloading' || item.status === 'Installing'" right>
                             <q-spinner size="30px"></q-spinner>
                         </q-item-side>
-                        <q-tooltip delay=250>{{$store.state.installed[key].status }}</q-tooltip>
+                        <q-tooltip :delay="250">{{item.status }}</q-tooltip>
                     </q-item>
                 </div>
             </q-list>
