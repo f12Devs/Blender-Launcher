@@ -7,18 +7,23 @@ import { format as formatUrl } from 'url'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
-let mainWindow
+let mainWindow: any
 
 function createMainWindow () {
     const window = new BrowserWindow()
 
     if (isDevelopment) {
         window.webContents.openDevTools()
-        BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/nhdogjmejiglipccpnnnanhbledajbpd/4.1.4_0')
+        BrowserWindow.addDevToolsExtension(
+            process.env.LOCALAPPDATA +
+                '/Google/Chrome/User Data/Default/Extensions/nhdogjmejiglipccpnnnanhbledajbpd/4.1.4_0'
+        )
     }
 
     if (isDevelopment) {
-        window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+        window.loadURL(
+            `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`
+        )
     } else {
         window.loadURL(
             formatUrl({

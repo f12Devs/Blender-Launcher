@@ -1,11 +1,11 @@
-export interface Varient {
+export interface IVarient {
     name: string
     remoteVersion: string
     download: string
     status: string
     installedVersion?: string
 }
-export interface RootState {
+export interface IRootState {
     selected: string
-    varients: Varient[]
+    varients: IVarient[]
 }

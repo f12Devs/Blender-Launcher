@@ -1,53 +1,53 @@
-import request from 'request'
 import fs from 'fs'
-interface Configuration {
+import request from 'request'
+interface IConfiguration {
     remoteFile: string
     localFile: string
-    onProgress: Function
+    onProgress: (receivedBytes: number, totalBytes: number) => void
 }
-interface Chunk {
+interface IChunk {
     length: number
 }
-interface Data {
+interface IData {
     headers: {
         'content-length': string
     }
 }
-export default function downloadFile(configuration: Configuration) {
-    return new Promise(function(resolve) {
+export default function downloadFile (configuration: IConfiguration) {
+    return new Promise((resolve) => {
         // Save variable to know progress
-        var receivedBytes = 0
-        var totalBytes = 0
+        let receivedBytes = 0
+        let totalBytes = 0
 
-        var req = request({
+        const req = request({
             method: 'GET',
             uri: configuration.remoteFile
         })
 
-        var out = fs.createWriteStream(configuration.localFile)
+        const out = fs.createWriteStream(configuration.localFile)
         req.pipe(out)
 
-        req.on('response', function(data: Data) {
+        req.on('response', (data: IData) => {
             // Change the total bytes value to get progress later.
-            totalBytes = parseInt(data.headers['content-length'])
+            totalBytes = parseInt(data.headers['content-length'], 10)
         })
 
         // Get progress if callback exists
         if (configuration.hasOwnProperty('onProgress')) {
-            req.on('data', function(chunk: Chunk) {
+            req.on('data', (chunk: IChunk) => {
                 // Update the received bytes
                 receivedBytes += chunk.length
 
                 configuration.onProgress(receivedBytes, totalBytes)
             })
         } else {
-            req.on('data', function(chunk: Chunk) {
+            req.on('data', (chunk: IChunk) => {
                 // Update the received bytes
                 receivedBytes += chunk.length
             })
         }
 
-        req.on('end', function() {
+        req.on('end', () => {
             resolve()
         })
     })

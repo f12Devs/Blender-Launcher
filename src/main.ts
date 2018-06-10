@@ -2,63 +2,63 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 
-import './styles/quasar.styl'
-import 'quasar-extras/animate'
-import 'quasar-extras/roboto-font'
-import 'quasar-extras/material-icons'
 import Quasar, {
+    CloseOverlay,
     QBtn,
+    QBtnGroup,
+    QChip,
+    QIcon,
+    QItem,
+    QItemMain,
+    QItemSeparator,
+    QItemSide,
+    QItemTile,
     QLayout,
-    QLayoutHeader,
     QLayoutDrawer,
-    QPage,
-    QPageContainer,
-    QToolbar,
-    QToolbarTitle,
+    QLayoutHeader,
     QList,
     QListHeader,
-    QItemSeparator,
-    QItem,
-    QItemSide,
-    QItemMain,
-    QIcon,
-    QItemTile,
-    QChip,
-    QBtnGroup,
+    QPage,
+    QPageContainer,
     QPopover,
-    Ripple,
-    CloseOverlay,
     QSpinner,
-    QTooltip
+    QToolbar,
+    QToolbarTitle,
+    QTooltip,
+    Ripple
 } from 'quasar'
+import 'quasar-extras/animate'
+import 'quasar-extras/material-icons'
+import 'quasar-extras/roboto-font'
+import './styles/quasar.styl'
 
 Vue.use(Quasar, {
     components: {
         QBtn,
+        QBtnGroup,
+        QChip,
+        QIcon,
+        QItem,
+        QItemMain,
+        QItemSeparator,
+        QItemSide,
+        QItemTile,
         QLayout,
-        QLayoutHeader,
         QLayoutDrawer,
-        QPage,
-        QPageContainer,
-        QToolbar,
-        QToolbarTitle,
+        QLayoutHeader,
         QList,
         QListHeader,
-        QItemSeparator,
-        QItem,
-        QItemSide,
-        QItemMain,
-        QIcon,
-        QItemTile,
-        QChip,
-        QBtnGroup,
+        QPage,
+        QPageContainer,
         QPopover,
         QSpinner,
+        QToolbar,
+        QToolbarTitle,
         QTooltip
     },
     directives: {
-        Ripple,
-        CloseOverlay
+        CloseOverlay,
+        Ripple
     },
     plugins: {}
 })
@@ -66,6 +66,6 @@ Vue.use(Quasar, {
 Vue.config.productionTip = false
 
 new Vue({
-    store,
-    render: h => h(App)
+    render: (h) => h(App),
+    store
 }).$mount('#app')

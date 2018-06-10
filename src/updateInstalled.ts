@@ -1,8 +1,8 @@
-import { Varient, RootState } from './store/types'
 import fs from 'fs'
 import { Store } from 'vuex'
-export default (store: Store<RootState>) => {
-    let downloadFolder = window.process.env.LOCALAPPDATA + '/Blender Launcher'
+import { IRootState, IVarient } from './store/types'
+export default (store: Store<IRootState>) => {
+    const downloadFolder = window.process.env.LOCALAPPDATA + '/Blender Launcher'
     // store.state.varients.forEach(varient => {
     //     store.commit('updateVarient', {
     //         target: store.state.varients.indexOf(varient),
@@ -11,28 +11,28 @@ export default (store: Store<RootState>) => {
     // })
     fs.readdir(downloadFolder, (err, files) => {
         if (err) throw err
-        files.forEach(file => {
+        files.forEach((file) => {
             fs.readFile(
                 downloadFolder + '/' + file + '/blenderLauncher.json',
                 'utf8',
-                (err, fileContents) => {
-                    if (err) throw err
-                    let contents = JSON.parse(fileContents)
-                    let storeVarient = store.state.varients.find(
-                        (varient: Varient) => varient.name === contents.name
+                (fileReadErr, fileContents) => {
+                    if (fileReadErr) throw fileReadErr
+                    const contents = JSON.parse(fileContents)
+                    const storeVarient = store.state.varients.find(
+                        (varient: IVarient) => varient.name === contents.name
                     )
                     if (storeVarient == null) return
                     if (storeVarient.remoteVersion === contents.version) {
                         store.commit('updateVarient', {
+                            localVersion: contents.version,
                             name: contents.name,
-                            status: 'Updated',
-                            localVersion: contents.version
+                            status: 'Updated'
                         })
                     } else {
                         store.commit('updateVarient', {
+                            localVersion: contents.version,
                             name: contents.name,
-                            status: 'Update Avalible',
-                            localVersion: contents.version
+                            status: 'Update Avalible'
                         })
                     }
                 }

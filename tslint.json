@@ -1,0 +1,12 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended", "tslint-config-standard"],
+    "jsRules": {},
+    "rules": {
+        "indent": [false, "spaces", 4],
+        "ter-indent": 4,
+        "space-before-function-paren": [false],
+        "arrow-parens": false
+    },
+    "rulesDirectory": []
+}

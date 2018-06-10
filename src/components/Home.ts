@@ -1,21 +1,15 @@
-import downloadFile from '../downloader'
-import fs from 'fs-extra'
 import cp from 'child_process'
 import DecompressZip from 'decompress-zip'
+import fs from 'fs-extra'
 import Vue from 'vue'
-import { Varient } from '../store/types'
+import downloadFile from '../downloader'
+import { IVarient } from '../store/types'
 export default Vue.extend({
-    name: 'Home',
-    data () {
-        return {
-            progress: 0
-        }
-    },
     computed: {
-        selected (): string {
+        selected(): string {
             return this.$store.state.selected
         },
-        installing () {
+        installing() {
             if (
                 this.selectedVarient.status === 'Downloading' ||
                 this.selectedVarient.status === 'Installing'
@@ -25,51 +19,57 @@ export default Vue.extend({
                 return false
             }
         },
-        selectedVarient (): Varient {
+        selectedVarient(): IVarient {
             return this.$store.state.varients.find(
-                (varient: Varient) => varient.name === this.selected
+                (varient: IVarient) => varient.name === this.selected
             )
         }
     },
+    data() {
+        return {
+            progress: 0
+        }
+    },
     methods: {
-        launch () {
+        launch() {
             cp.exec(
                 '"' +
                     window.process.env.LOCALAPPDATA +
                     '/Blender Launcher/' +
                     this.selected +
                     '/blender.exe"',
-                function (err) {
+                err => {
                     if (err) alert('Launch ' + err)
                 }
             )
         },
-        download () {
-            let varient = this.selectedVarient
-            let startingStatus = varient.status
-            let target = (): number =>
+        download() {
+            const varient = this.selectedVarient
+            const startingStatus = varient.status
+            const target = (): number =>
                 this.$store.state.varients.indexOf(varient)
             this.$store.commit('updateVarient', {
                 name: varient.name,
                 status: 'Downloading'
             })
-            let localFile =
+            const localFile =
                 window.process.env.TEMP + '/' + varient.remoteVersion + '.zip'
             downloadFile({
-                remoteFile: varient.download,
                 localFile,
                 onProgress: (received: number, total: number) => {
                     if (this.$store.state.selected === varient.name) {
                         this.progress = parseInt(
-                            ((received * 100) / total).toFixed(1)
+                            ((received * 100) / total).toFixed(1),
+                            10
                         )
                     }
-                }
+                },
+                remoteFile: varient.download
             })
                 .then(() => {
-                    let extractedPath =
+                    const extractedPath =
                         window.process.env.LOCALAPPDATA + '/Blender Launcher/'
-                    var unzipper = new DecompressZip(localFile)
+                    const unzipper = new DecompressZip(localFile)
                     this.$store.commit('updateVarient', {
                         name: varient.name,
                         status: 'Installing'
@@ -86,11 +86,11 @@ export default Vue.extend({
                     })
                     // Notify when everything is extracted
                     unzipper.on('extract', (log: any[]) => {
-                        let oldPath =
+                        const oldPath =
                             window.process.env.LOCALAPPDATA +
                             '/Blender Launcher/' +
                             varient.name
-                        let installedPath = log[0].folder
+                        const installedPath = log[0].folder
                             ? extractedPath +
                               log[0].folder.replace('\\', '/').split('/')[0]
                             : log[0].stored
@@ -115,8 +115,8 @@ export default Vue.extend({
                                             }", "version": "${
                                                 varient.remoteVersion
                                             }"}`,
-                                            err => {
-                                                if (err) {
+                                            err2 => {
+                                                if (err2) {
                                                     setTimeout(() => {
                                                         fs.appendFile(
                                                             installedPath +
@@ -126,8 +126,8 @@ export default Vue.extend({
                                                             }", "version": "${
                                                                 varient.remoteVersion
                                                             }"}`,
-                                                            err => {
-                                                                if (err) {
+                                                            err3 => {
+                                                                if (err3) {
                                                                     this.progress = 0
                                                                     this.$store.commit(
                                                                         'updateVarient',
@@ -139,7 +139,7 @@ export default Vue.extend({
                                                                     )
                                                                     alert(
                                                                         'Install ' +
-                                                                            err
+                                                                            err3
                                                                     )
                                                                 }
                                                             }
@@ -157,11 +157,11 @@ export default Vue.extend({
                                 fs.rename(installedPath, oldPath, () => {
                                     fs.removeSync(oldPath + '-old')
                                     this.$store.commit('updateVarient', {
-                                        target: target(),
                                         data: {
                                             status: 'Updated',
                                             version: varient.remoteVersion
-                                        }
+                                        },
+                                        target: target()
                                     })
                                     this.progress = 0
                                 })
@@ -183,7 +183,8 @@ export default Vue.extend({
                         (fileIndex: number, fileCount: number) => {
                             if (this.selected === varient.name) {
                                 this.progress = parseInt(
-                                    ((fileIndex * 100) / fileCount).toFixed(1)
+                                    ((fileIndex * 100) / fileCount).toFixed(1),
+                                    10
                                 )
                             }
                         }
@@ -203,9 +204,11 @@ export default Vue.extend({
                     })
                 })
         },
-        uninstall () {
+        uninstall() {
             fs.remove(
-                window.process.env.LOCALAPPDATA + '/Blender Launcher/' + this.selected,
+                window.process.env.LOCALAPPDATA +
+                    '/Blender Launcher/' +
+                    this.selected,
                 err => {
                     if (err) {
                         alert('Uninstall ' + err)
@@ -219,5 +222,6 @@ export default Vue.extend({
             )
         }
     },
+    name: 'Home',
     props: ['tags']
 })

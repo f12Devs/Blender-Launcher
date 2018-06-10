@@ -1,6 +1,6 @@
 /* global jest */
-export default jest.fn().mockImplementation(function (configuration) {
-    return new Promise(function (resolve, reject) {
+export default jest.fn().mockImplementation((configuration) => {
+    return new Promise((resolve, reject) => {
         configuration.onProgress(50, 100)
         resolve()
     })

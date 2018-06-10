@@ -38,6 +38,7 @@
         "flush-promises": "^1.0.0",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.1",
+        "tslint-config-standard": "^7.0.0",
         "vue-cli-plugin-electron-builder": "^0.3.2",
         "vue-cli-plugin-quasar": "^0.1.7",
         "vue-template-compiler": "^2.5.16"
