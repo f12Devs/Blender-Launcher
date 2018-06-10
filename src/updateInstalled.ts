@@ -1,17 +1,15 @@
 import fs from 'fs'
+import path from 'path'
 import { Store } from 'vuex'
 import { IRootState, IVarient } from './store/types'
 export default (store: Store<IRootState>) => {
-    const downloadFolder = window.process.env.LOCALAPPDATA + '/Blender Launcher'
-    // store.state.varients.forEach(varient => {
-    //     store.commit('updateVarient', {
-    //         target: store.state.varients.indexOf(varient),
-    //         data: { status: 'Not Installed' }
-    //     })
-    // })
+    const downloadFolder = path.join(
+        process.env.LOCALAPPDATA,
+        'Blender Launcher'
+    )
     fs.readdir(downloadFolder, (err, files) => {
         if (err) throw err
-        files.forEach((file) => {
+        files.forEach(file => {
             fs.readFile(
                 downloadFolder + '/' + file + '/blenderLauncher.json',
                 'utf8',

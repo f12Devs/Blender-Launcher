@@ -1,6 +1,7 @@
 import cp from 'child_process'
 import DecompressZip from 'decompress-zip'
 import fs from 'fs-extra'
+import path from 'path'
 import Vue from 'vue'
 import downloadFile from '../downloader'
 import { IVarient } from '../store/types'
@@ -34,10 +35,13 @@ export default Vue.extend({
         launch() {
             cp.exec(
                 '"' +
-                    window.process.env.LOCALAPPDATA +
-                    '/Blender Launcher/' +
-                    this.selected +
-                    '/blender.exe"',
+                    path.join(
+                        process.env.LOCALAPPDATA,
+                        'Blender Launcher',
+                        this.selected,
+                        'blender.exe'
+                    ) +
+                    '"',
                 err => {
                     if (err) alert('Launch ' + err)
                 }
@@ -46,14 +50,10 @@ export default Vue.extend({
         download() {
             const varient = this.selectedVarient
             const startingStatus = varient.status
-            const target = (): number =>
-                this.$store.state.varients.indexOf(varient)
-            this.$store.commit('updateVarient', {
-                name: varient.name,
-                status: 'Downloading'
-            })
-            const localFile =
-                window.process.env.TEMP + '/' + varient.remoteVersion + '.zip'
+            const localFile = path.join(
+                process.env.TEMP,
+                varient.remoteVersion + '.zip'
+            )
             downloadFile({
                 localFile,
                 onProgress: (received: number, total: number) => {
@@ -67,8 +67,10 @@ export default Vue.extend({
                 remoteFile: varient.download
             })
                 .then(() => {
-                    const extractedPath =
-                        window.process.env.LOCALAPPDATA + '/Blender Launcher/'
+                    const extractedPath = path.join(
+                        process.env.LOCALAPPDATA,
+                        'Blender Launcher'
+                    )
                     const unzipper = new DecompressZip(localFile)
                     this.$store.commit('updateVarient', {
                         name: varient.name,
@@ -86,96 +88,123 @@ export default Vue.extend({
                     })
                     // Notify when everything is extracted
                     unzipper.on('extract', (log: any[]) => {
-                        const oldPath =
-                            window.process.env.LOCALAPPDATA +
-                            '/Blender Launcher/' +
+                        const oldPath = path.join(
+                            process.env.LOCALAPPDATA,
+                            'Blender Launcher',
                             varient.name
-                        const installedPath = log[0].folder
-                            ? extractedPath +
-                              log[0].folder.replace('\\', '/').split('/')[0]
-                            : log[0].stored
-                                ? log[0].stored.replace('\\', '/').split('/')[0]
-                                : extractedPath +
-                                  log[0].deflated
-                                      .replace('\\', '/')
-                                      .split('/')[0]
-                        fs.appendFile(
-                            installedPath + '/blenderLauncher.json',
-                            `{"name": "${varient.name}", "version": "${
-                                varient.remoteVersion
-                            }"}`,
-                            err => {
-                                if (err) {
-                                    setTimeout(() => {
-                                        fs.appendFile(
-                                            installedPath +
-                                                '/blenderLauncher.json',
-                                            `{"name": "${
-                                                varient.name
-                                            }", "version": "${
-                                                varient.remoteVersion
-                                            }"}`,
-                                            err2 => {
-                                                if (err2) {
-                                                    setTimeout(() => {
-                                                        fs.appendFile(
-                                                            installedPath +
-                                                                '/blenderLauncher.json',
-                                                            `{"name": "${
-                                                                varient.name
-                                                            }", "version": "${
-                                                                varient.remoteVersion
-                                                            }"}`,
-                                                            err3 => {
-                                                                if (err3) {
-                                                                    this.progress = 0
-                                                                    this.$store.commit(
-                                                                        'updateVarient',
-                                                                        {
-                                                                            name:
-                                                                                varient.name,
-                                                                            status: startingStatus
-                                                                        }
-                                                                    )
-                                                                    alert(
-                                                                        'Install ' +
-                                                                            err3
-                                                                    )
+                        )
+                        let folderPath
+                        if (log[0].folder) {
+                            folderPath = log[0].folder
+                                .replace('\\', '/')
+                                .split('/')[0]
+                        } else if (log[0].stored) {
+                            folderPath = log[0].stored
+                                .replace('\\', '/')
+                                .split('/')[0]
+                        } else {
+                            folderPath = log[0].deflated
+                                .replace('\\', '/')
+                                .split('/')[0]
+                        }
+                        const installedPath = path.join(
+                            extractedPath,
+                            folderPath
+                        )
+                        new Promise((resolve, reject) => {
+                            fs.appendFile(
+                                path.join(
+                                    installedPath,
+                                    'blenderLauncher.json'
+                                ),
+                                `{"name": "${varient.name}", "version": "${
+                                    varient.remoteVersion
+                                }"}`,
+                                err => {
+                                    if (err) {
+                                        setTimeout(() => {
+                                            fs.appendFile(
+                                                path.join(
+                                                    installedPath,
+                                                    'blenderLauncher.json'
+                                                ),
+                                                `{"name": "${
+                                                    varient.name
+                                                }", "version": "${
+                                                    varient.remoteVersion
+                                                }"}`,
+                                                err2 => {
+                                                    if (err2) {
+                                                        setTimeout(() => {
+                                                            fs.appendFile(
+                                                                path.join(
+                                                                    installedPath,
+                                                                    'blenderLauncher.json'
+                                                                ),
+                                                                `{"name": "${
+                                                                    varient.name
+                                                                }", "version": "${
+                                                                    varient.remoteVersion
+                                                                }"}`,
+                                                                err3 => {
+                                                                    if (err3) {
+                                                                        reject()
+                                                                    } else {
+                                                                        resolve()
+                                                                    }
                                                                 }
-                                                            }
-                                                        )
-                                                    }, 500)
+                                                            )
+                                                        }, 5000)
+                                                    } else resolve()
                                                 }
+                                            )
+                                        }, 1000)
+                                    } else resolve()
+                                }
+                            )
+                        }).then(
+                            () => {
+                                if (fs.existsSync(oldPath)) {
+                                    fs.rename(oldPath, oldPath + '-old', () => {
+                                        fs.rename(
+                                            installedPath,
+                                            oldPath,
+                                            () => {
+                                                fs.removeSync(oldPath + '-old')
+                                                this.$store.commit(
+                                                    'updateVarient',
+                                                    {
+                                                        name: varient.name,
+                                                        status: 'Updated',
+                                                        version:
+                                                            varient.remoteVersion
+                                                    }
+                                                )
+                                                this.progress = 0
                                             }
                                         )
-                                    }, 500)
-                                }
-                            }
-                        )
-                        if (fs.existsSync(oldPath)) {
-                            fs.rename(oldPath, oldPath + '-old', () => {
-                                fs.rename(installedPath, oldPath, () => {
-                                    fs.removeSync(oldPath + '-old')
-                                    this.$store.commit('updateVarient', {
-                                        data: {
+                                    })
+                                } else {
+                                    fs.rename(installedPath, oldPath, () => {
+                                        this.$store.commit('updateVarient', {
+                                            name: varient.name,
                                             status: 'Updated',
                                             version: varient.remoteVersion
-                                        },
-                                        target: target()
+                                        })
+                                        this.progress = 0
                                     })
-                                    this.progress = 0
-                                })
-                            })
-                        } else {
-                            fs.rename(installedPath, oldPath, () => {
+                                }
+                            },
+                            err => {
+                                this.progress = 0
                                 this.$store.commit('updateVarient', {
                                     name: varient.name,
-                                    status: 'Updated',
-                                    version: varient.remoteVersion
+                                    status: startingStatus
                                 })
-                                this.progress = 0
-                            })
-                        }
+                                fs.removeSync(installedPath)
+                                alert('Install ' + err)
+                            }
+                        )
                     })
 
                     unzipper.on(
@@ -206,9 +235,11 @@ export default Vue.extend({
         },
         uninstall() {
             fs.remove(
-                window.process.env.LOCALAPPDATA +
-                    '/Blender Launcher/' +
-                    this.selected,
+                path.join(
+                    process.env.LOCALAPPDATA,
+                    'Blender Launcher',
+                    this.selected
+                ),
                 err => {
                     if (err) {
                         alert('Uninstall ' + err)
