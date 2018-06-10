@@ -6,7 +6,8 @@
         "test": "vue-cli-service test:unit --no-cache",
         "lint": "vue-cli-service lint",
         "build": "vue-cli-service build:electron",
-        "serve": "vue-cli-service serve:electron"
+        "serve": "vue-cli-service serve:electron",
+        "tslint": "tslint --project . -c tslint.json"
     },
     "dependencies": {
         "decompress-zip": "^0.3.1",
