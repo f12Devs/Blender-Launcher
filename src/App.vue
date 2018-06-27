@@ -43,7 +43,6 @@
 </template>
 
 <script>
-/* global __static */
 import Home from './components/Home.vue'
 import updateInstalled from './updateInstalled'
 import path from 'path'
@@ -55,7 +54,7 @@ export default {
     data () {
         return {
             leftDrawerOpen: this.$q.platform.is.desktop,
-            logoPath: path.join(__static, '/BlenderDesktopLogo.png')
+            logoPath: path.join(process.env.BASE_URL, 'BlenderDesktopLogo.png')
         }
     },
     created () {

@@ -13,7 +13,6 @@
         "decompress-zip": "^0.3.1",
         "quasar-extras": "^2.0.0",
         "quasar-framework": "^0.16.0",
-        "source-map-support": "^0.5.4",
         "vue": "^2.5.16",
         "vue-class-component": "^6.0.0",
         "vue-property-decorator": "^6.0.0",
@@ -33,14 +32,11 @@
         "babel-core": "7.0.0-bridge.0",
         "babel-jest": "^22.4.3",
         "electron": "^2.0.2",
-        "electron-builder": "^20.14.7",
-        "electron-webpack": "^2.1.2",
-        "electron-webpack-ts": "^2.0.2",
         "flush-promises": "^1.0.0",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.1",
         "tslint-config-standard": "^7.0.0",
-        "vue-cli-plugin-electron-builder": "^0.3.2",
+        "vue-cli-plugin-electron-builder": "^1.0.0-alpha.11",
         "vue-cli-plugin-quasar": "^0.1.7",
         "vue-template-compiler": "^2.5.16"
     },
@@ -49,23 +45,5 @@
         "last 2 versions",
         "not ie <= 8"
     ],
-    "electronWebpack": {
-        "renderer": {
-            "sourceDirectory": "src",
-            "webpackConfig": "dist_electron/webpack.renderer.additions.js"
-        },
-        "main": {
-            "webpackConfig": "dist_electron/webpack.main.additions.js"
-        }
-    },
-    "build": {
-        "directories": {
-            "output": "dist_electron"
-        },
-        "files": [
-            "dist/**/*",
-            "node_modules/**/*",
-            "package.json"
-        ]
-    }
+    "main": "dist_electron/bundled/background.js"
 }

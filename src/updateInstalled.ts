@@ -4,7 +4,7 @@ import { Store } from 'vuex'
 import { IRootState, IVarient } from './store/types'
 export default (store: Store<IRootState>) => {
     const downloadFolder = path.join(
-        process.env.LOCALAPPDATA,
+        window.process.env.LOCALAPPDATA,
         'Blender Launcher'
     )
     fs.readdir(downloadFolder, (err, files) => {

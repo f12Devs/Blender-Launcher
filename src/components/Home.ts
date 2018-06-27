@@ -36,7 +36,7 @@ export default Vue.extend({
             cp.exec(
                 '"' +
                     path.join(
-                        process.env.LOCALAPPDATA,
+                        window.process.env.LOCALAPPDATA,
                         'Blender Launcher',
                         this.selected,
                         'blender.exe'
@@ -51,7 +51,7 @@ export default Vue.extend({
             const varient = this.selectedVarient
             const startingStatus = varient.status
             const localFile = path.join(
-                process.env.TEMP,
+                window.process.env.TEMP,
                 varient.remoteVersion + '.zip'
             )
             downloadFile({
@@ -68,7 +68,7 @@ export default Vue.extend({
             })
                 .then(() => {
                     const extractedPath = path.join(
-                        process.env.LOCALAPPDATA,
+                        window.process.env.LOCALAPPDATA,
                         'Blender Launcher'
                     )
                     const unzipper = new DecompressZip(localFile)
@@ -89,7 +89,7 @@ export default Vue.extend({
                     // Notify when everything is extracted
                     unzipper.on('extract', (log: any[]) => {
                         const oldPath = path.join(
-                            process.env.LOCALAPPDATA,
+                            window.process.env.LOCALAPPDATA,
                             'Blender Launcher',
                             varient.name
                         )
@@ -236,7 +236,7 @@ export default Vue.extend({
         uninstall() {
             fs.remove(
                 path.join(
-                    process.env.LOCALAPPDATA,
+                    window.process.env.LOCALAPPDATA,
                     'Blender Launcher',
                     this.selected
                 ),
