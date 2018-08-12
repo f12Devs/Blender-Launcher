@@ -1,4 +1,11 @@
+import { remote } from 'electron'
+import path from 'path'
+
 export default {
+    installPath: path.join(
+        process.env.LOCALAPPDATA || remote.app.getPath('appData'),
+        'blender_installs'
+    ),
     selected: 'Stable',
     variants: [
         {
@@ -10,8 +17,8 @@ export default {
         },
         {
             download:
-                'https://builder.blender.org/download//blender-2.79-94b9994-win64.zip',
-            name: 'Official',
+                'https://mirror.clarkson.edu/blender/release/Blender2.79/blender-2.79b-linux-glibc219-x86_64.tar.bz2',
+            name: 'linux',
             remoteVersion: 'blender-2.79-94b9994-win64',
             status: 'Not Installed'
         },

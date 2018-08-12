@@ -1,12 +1,10 @@
-import fs from 'fs'
+import fs from 'fs-extra'
 import path from 'path'
 import { Store } from 'vuex'
 import { IRootState, IVariant } from './store/types'
 export default (store: Store<IRootState>) => {
-    const downloadFolder = path.join(
-        window.process.env.LOCALAPPDATA,
-        'Blender Launcher'
-    )
+    const downloadFolder = store.state.installPath
+    fs.ensureDirSync(downloadFolder)
     fs.readdir(downloadFolder, (err, files) => {
         if (err) throw err
         files.forEach(file => {

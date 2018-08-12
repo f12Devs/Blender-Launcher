@@ -6,6 +6,7 @@ export interface IVariant {
     installedVersion?: string
 }
 export interface IRootState {
+    installPath: string
     selected: string
     variants: IVariant[]
 }

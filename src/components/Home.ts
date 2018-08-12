@@ -1,10 +1,12 @@
 import cp from 'child_process'
 import DecompressZip from 'decompress-zip'
+import { remote } from 'electron'
 import fs from 'fs-extra'
 import path from 'path'
 import Vue from 'vue'
 import downloadFile from '../downloader'
 import { IVariant } from '../store/types'
+const app = remote.app
 export default Vue.extend({
     computed: {
         selected (): string {
@@ -36,10 +38,9 @@ export default Vue.extend({
             cp.exec(
                 '"' +
                     path.join(
-                        window.process.env.LOCALAPPDATA,
-                        'Blender Launcher',
+                        this.$store.state.installPath,
                         this.selected,
-                        'blender.exe'
+                        'blender' + (process.platform === 'win32' ? 'exe' : '')
                     ) +
                     '"',
                 err => {
@@ -50,8 +51,12 @@ export default Vue.extend({
         download () {
             const variant = this.selectedVariant
             const startingStatus = variant.status
+            this.$store.commit('updateVariant', {
+                name: variant.name,
+                status: 'Downloading'
+            })
             const localFile = path.join(
-                window.process.env.TEMP,
+                app.getPath('temp'),
                 variant.remoteVersion + '.zip'
             )
             downloadFile({
@@ -67,10 +72,7 @@ export default Vue.extend({
                 remoteFile: variant.download
             })
                 .then(() => {
-                    const extractedPath = path.join(
-                        window.process.env.LOCALAPPDATA,
-                        'Blender Launcher'
-                    )
+                    const extractedPath = this.$store.state.installPath
                     const unzipper = new DecompressZip(localFile)
                     this.$store.commit('updateVariant', {
                         name: variant.name,
@@ -89,8 +91,7 @@ export default Vue.extend({
                     // Notify when everything is extracted
                     unzipper.on('extract', (log: any[]) => {
                         const oldPath = path.join(
-                            window.process.env.LOCALAPPDATA,
-                            'Blender Launcher',
+                            this.$store.state.installPath,
                             variant.name
                         )
                         let folderPath
@@ -235,11 +236,7 @@ export default Vue.extend({
         },
         uninstall () {
             fs.remove(
-                path.join(
-                    window.process.env.LOCALAPPDATA,
-                    'Blender Launcher',
-                    this.selected
-                ),
+                path.join(this.$store.state.installPath, this.selected),
                 err => {
                     if (err) {
                         alert('Uninstall ' + err)
