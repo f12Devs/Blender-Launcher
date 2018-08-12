@@ -1,5 +1,5 @@
 import mutations from '@/store/mutations'
-const { setSelected, setStatus, setVersion, setVarient } = mutations
+const { setSelected, setStatus, setVersion, setVariant } = mutations
 describe('mutations', () => {
     test('setSelected', () => {
         let state = { selected: 'wrong' }
@@ -44,14 +44,14 @@ describe('mutations', () => {
         expect(state.installed.toChange.version).toBe('new')
         expect(state.installed.dontChange.version).toBe('same')
     })
-    test('setVarient', () => {
+    test('setVariant', () => {
         let state = {
             installed: {
                 previous: 'stillHere'
             }
         }
-        setVarient(state, { target: 'newVersionA', data: 'thisIsA' })
-        setVarient(state, { target: 'newVersionB', data: 'thisIsB' })
+        setVariant(state, { target: 'newVersionA', data: 'thisIsA' })
+        setVariant(state, { target: 'newVersionB', data: 'thisIsB' })
         expect(state.installed.previous).toBe('stillHere')
         expect(state.installed.newVersionA).toBe('thisIsA')
         expect(state.installed.newVersionB).toBe('thisIsB')

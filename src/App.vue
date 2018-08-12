@@ -14,8 +14,8 @@
 
         <q-layout-drawer behavior="desktop" v-model="leftDrawerOpen" content-class="bg-grey-2">
             <q-list no-border link inset-delimiter>
-                <q-list-header>Blender Varients:</q-list-header>
-                <div v-for="(item, index) in $store.state.varients" :key="item.name">
+                <q-list-header>Blender Variants:</q-list-header>
+                <div v-for="(item, index) in $store.state.variants" :key="item.name">
                     <q-item-separator v-if="index!=0" class="q-ma-none" />
                     <q-item v-ripple link @click.native="$store.commit('setSelected', item.name)">
                         <q-item-side :avatar="item.name=='Stable' ? logoPath: null" :icon="item.name=='Stable' ? null: 'code'" />

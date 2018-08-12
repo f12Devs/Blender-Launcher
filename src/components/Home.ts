@@ -4,35 +4,35 @@ import fs from 'fs-extra'
 import path from 'path'
 import Vue from 'vue'
 import downloadFile from '../downloader'
-import { IVarient } from '../store/types'
+import { IVariant } from '../store/types'
 export default Vue.extend({
     computed: {
-        selected(): string {
+        selected (): string {
             return this.$store.state.selected
         },
-        installing() {
+        installing () {
             if (
-                this.selectedVarient.status === 'Downloading' ||
-                this.selectedVarient.status === 'Installing'
+                this.selectedVariant.status === 'Downloading' ||
+                this.selectedVariant.status === 'Installing'
             ) {
                 return true
             } else {
                 return false
             }
         },
-        selectedVarient(): IVarient {
-            return this.$store.state.varients.find(
-                (varient: IVarient) => varient.name === this.selected
+        selectedVariant (): IVariant {
+            return this.$store.state.variants.find(
+                (variant: IVariant) => variant.name === this.selected
             )
         }
     },
-    data() {
+    data () {
         return {
             progress: 0
         }
     },
     methods: {
-        launch() {
+        launch () {
             cp.exec(
                 '"' +
                     path.join(
@@ -47,24 +47,24 @@ export default Vue.extend({
                 }
             )
         },
-        download() {
-            const varient = this.selectedVarient
-            const startingStatus = varient.status
+        download () {
+            const variant = this.selectedVariant
+            const startingStatus = variant.status
             const localFile = path.join(
                 window.process.env.TEMP,
-                varient.remoteVersion + '.zip'
+                variant.remoteVersion + '.zip'
             )
             downloadFile({
                 localFile,
                 onProgress: (received: number, total: number) => {
-                    if (this.$store.state.selected === varient.name) {
+                    if (this.$store.state.selected === variant.name) {
                         this.progress = parseInt(
                             ((received * 100) / total).toFixed(1),
                             10
                         )
                     }
                 },
-                remoteFile: varient.download
+                remoteFile: variant.download
             })
                 .then(() => {
                     const extractedPath = path.join(
@@ -72,15 +72,15 @@ export default Vue.extend({
                         'Blender Launcher'
                     )
                     const unzipper = new DecompressZip(localFile)
-                    this.$store.commit('updateVarient', {
-                        name: varient.name,
+                    this.$store.commit('updateVariant', {
+                        name: variant.name,
                         status: 'Installing'
                     })
                     // Add the error event listener
                     unzipper.on('error', (err: Error) => {
                         this.progress = 0
-                        this.$store.commit('updateVarient', {
-                            name: varient.name,
+                        this.$store.commit('updateVariant', {
+                            name: variant.name,
                             status: startingStatus
                         })
                         alert('Install ' + err)
@@ -91,7 +91,7 @@ export default Vue.extend({
                         const oldPath = path.join(
                             window.process.env.LOCALAPPDATA,
                             'Blender Launcher',
-                            varient.name
+                            variant.name
                         )
                         let folderPath
                         if (log[0].folder) {
@@ -117,8 +117,8 @@ export default Vue.extend({
                                     installedPath,
                                     'blenderLauncher.json'
                                 ),
-                                `{"name": "${varient.name}", "version": "${
-                                    varient.remoteVersion
+                                `{"name": "${variant.name}", "version": "${
+                                    variant.remoteVersion
                                 }"}`,
                                 err => {
                                     if (err) {
@@ -129,9 +129,9 @@ export default Vue.extend({
                                                     'blenderLauncher.json'
                                                 ),
                                                 `{"name": "${
-                                                    varient.name
+                                                    variant.name
                                                 }", "version": "${
-                                                    varient.remoteVersion
+                                                    variant.remoteVersion
                                                 }"}`,
                                                 err2 => {
                                                     if (err2) {
@@ -142,9 +142,9 @@ export default Vue.extend({
                                                                     'blenderLauncher.json'
                                                                 ),
                                                                 `{"name": "${
-                                                                    varient.name
+                                                                    variant.name
                                                                 }", "version": "${
-                                                                    varient.remoteVersion
+                                                                    variant.remoteVersion
                                                                 }"}`,
                                                                 err3 => {
                                                                     if (err3) {
@@ -172,12 +172,12 @@ export default Vue.extend({
                                             () => {
                                                 fs.removeSync(oldPath + '-old')
                                                 this.$store.commit(
-                                                    'updateVarient',
+                                                    'updateVariant',
                                                     {
-                                                        name: varient.name,
+                                                        name: variant.name,
                                                         status: 'Updated',
                                                         version:
-                                                            varient.remoteVersion
+                                                            variant.remoteVersion
                                                     }
                                                 )
                                                 this.progress = 0
@@ -186,10 +186,10 @@ export default Vue.extend({
                                     })
                                 } else {
                                     fs.rename(installedPath, oldPath, () => {
-                                        this.$store.commit('updateVarient', {
-                                            name: varient.name,
+                                        this.$store.commit('updateVariant', {
+                                            name: variant.name,
                                             status: 'Updated',
-                                            version: varient.remoteVersion
+                                            version: variant.remoteVersion
                                         })
                                         this.progress = 0
                                     })
@@ -197,8 +197,8 @@ export default Vue.extend({
                             },
                             err => {
                                 this.progress = 0
-                                this.$store.commit('updateVarient', {
-                                    name: varient.name,
+                                this.$store.commit('updateVariant', {
+                                    name: variant.name,
                                     status: startingStatus
                                 })
                                 fs.removeSync(installedPath)
@@ -210,7 +210,7 @@ export default Vue.extend({
                     unzipper.on(
                         'progress',
                         (fileIndex: number, fileCount: number) => {
-                            if (this.selected === varient.name) {
+                            if (this.selected === variant.name) {
                                 this.progress = parseInt(
                                     ((fileIndex * 100) / fileCount).toFixed(1),
                                     10
@@ -227,13 +227,13 @@ export default Vue.extend({
                 .catch(err => {
                     alert('Download ' + err)
                     this.progress = 0
-                    this.$store.commit('updateVarient', {
-                        name: varient.name,
+                    this.$store.commit('updateVariant', {
+                        name: variant.name,
                         status: startingStatus
                     })
                 })
         },
-        uninstall() {
+        uninstall () {
             fs.remove(
                 path.join(
                     window.process.env.LOCALAPPDATA,
@@ -244,7 +244,7 @@ export default Vue.extend({
                     if (err) {
                         alert('Uninstall ' + err)
                     } else {
-                        this.$store.commit('updateVarient', {
+                        this.$store.commit('updateVariant', {
                             name: this.selected,
                             status: 'Not Installed'
                         })

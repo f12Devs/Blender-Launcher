@@ -1,6 +1,6 @@
 export default {
     selected: 'Stable',
-    varients: [
+    variants: [
         {
             download:
                 'http://dl.dropboxusercontent.com/s/p9vk9twwgw51dho/thing.zip?dl=0',

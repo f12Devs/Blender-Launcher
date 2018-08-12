@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import { MutationTree } from 'vuex'
-import { IRootState, IVarient } from './types'
+import { IRootState, IVariant } from './types'
 const mutations: MutationTree<IRootState> = {
     setSelected: (state: IRootState, selection: string) => {
         state.selected = selection
     },
-    updateVarient: (state: IRootState, payload: IVarient) => {
-        const target = state.varients.find((v) => v.name === payload.name)
+    updateVariant: (state: IRootState, payload: IVariant) => {
+        const target = state.variants.find(v => v.name === payload.name)
         if (target) {
-            Vue.set(state.varients, state.varients.indexOf(target), {
+            Vue.set(state.variants, state.variants.indexOf(target), {
                 ...target,
                 ...payload
             })

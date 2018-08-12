@@ -1,15 +1,15 @@
 <template>
     <div style="height:100%" class="row">
         <div style="height:100%" class="column">
-            hi there, version is {{selected}}, installed version of that is {{selectedVarient}}
+            hi there, version is {{selected}}, installed version of that is {{selectedVariant}}
             <div class="q-pa-md" style="position:fixed;bottom:0">
                 <q-btn-group>
-                    <q-btn @click="launch" color="primary" size="lg" label="Launch" :disabled="installing" v-if="selectedVarient.status != 'Not Installed'">
+                    <q-btn @click="launch" color="primary" size="lg" label="Launch" :disabled="installing" v-if="selectedVariant.status != 'Not Installed'">
                     </q-btn>
-                    <q-btn color="primary" :loading="installing" :percentage="progress" :disabled="selectedVarient.status == 'Updated'" @click="download()" size="lg" :label="selectedVarient.status != 'Not Installed' ? 'Update' : 'Install'">
-                        <span slot="loading">{{selectedVarient.status + ': ' + progress + '%'}}</span>
+                    <q-btn color="primary" :loading="installing" :percentage="progress" :disabled="selectedVariant.status == 'Updated'" @click="download()" size="lg" :label="selectedVariant.status != 'Not Installed' ? 'Update' : 'Install'">
+                        <span slot="loading">{{selectedVariant.status + ': ' + progress + '%'}}</span>
                     </q-btn>
-                    <q-btn icon="more vert" v-if="selectedVarient.status != 'Not Installed' && !installing" color="primary">
+                    <q-btn icon="more vert" v-if="selectedVariant.status != 'Not Installed' && !installing" color="primary">
                         <q-popover>
                             <q-list separator link>
                                 <q-item @click.native="uninstall" v-close-overlay>

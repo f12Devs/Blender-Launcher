@@ -167,7 +167,7 @@ describe('component', () => {
             )
             fs.appendFile.mockClear()
         })
-        test('download works with different varient selected', async () => {
+        test('download works with different variant selected', async () => {
             const vm = shallowMount(home, { store, localVue }).vm
             vm.$store.commit('setSelected', 'Official,New Compiler')
             expect(() => {

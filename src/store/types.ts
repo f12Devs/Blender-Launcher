@@ -1,4 +1,4 @@
-export interface IVarient {
+export interface IVariant {
     name: string
     remoteVersion: string
     download: string
@@ -7,5 +7,5 @@ export interface IVarient {
 }
 export interface IRootState {
     selected: string
-    varients: IVarient[]
+    variants: IVariant[]
 }
