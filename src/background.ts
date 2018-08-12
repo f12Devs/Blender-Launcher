@@ -3,7 +3,10 @@
 import { app, BrowserWindow, protocol } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
-import createProtocol from 'vue-cli-plugin-electron-builder/lib/createProtocol.js'
+import {
+    createProtocol,
+    installVueDevtools
+} from 'vue-cli-plugin-electron-builder/lib'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -12,7 +15,7 @@ let mainWindow: any
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
-function createMainWindow() {
+function createMainWindow () {
     const window = new BrowserWindow()
 
     if (isDevelopment) {
@@ -61,6 +64,7 @@ app.on('activate', () => {
 })
 
 // create main BrowserWindow when electron is ready
-app.on('ready', () => {
+app.on('ready', async () => {
+    await installVueDevtools()
     mainWindow = createMainWindow()
 })
